@@ -1,19 +1,16 @@
-/**
- * Created by Mark on 30.09.2017.
- */
 import java.sql.*;
 import java.util.*;
 
 public class Manager {
-    Connection co;
-    static Manager manager;
+    private Connection co;
+    private static Manager manager;
 
     public static void main (String [] args) {
         manager = new Manager();
         manager.waitForCommand();
     }
 
-    public void waitForCommand(){
+    private void waitForCommand(){
         manager.connect();
         boolean stayInProgram = true;
         Scanner scanner = new Scanner(System.in);
@@ -79,12 +76,14 @@ public class Manager {
         manager.close();
     }
 
-    public void connect() {
+    private void connect() {
 
         try {
-
+            /*
+            D:\Programs\java\manager\src\
+             */
             Class.forName("org.sqlite.JDBC");
-            co = DriverManager.getConnection ("jdbc:sqlite:D:\\Programs\\java\\manager\\src\\users.db");
+            co = DriverManager.getConnection ("jdbc:sqlite:src\\users.db");
             System.out.println("Connected");
 
         } catch (Exception ex) {
@@ -94,7 +93,7 @@ public class Manager {
         }
     }
 
-    public void addMultimedia(String table) {
+    private void addMultimedia(String table) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter multimedia name : ");
         String name = scanner.nextLine();
@@ -114,7 +113,7 @@ public class Manager {
         }
     }
 
-    public void getTable(String table, String order) {
+    private void getTable(String table, String order) {
         try {
             Statement statement = co.createStatement();
 
@@ -134,7 +133,7 @@ public class Manager {
         }
     }
 
-    public void delMultimedia() {
+    private  void delMultimedia() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введіть тип мультимедіа (команди games, films, books ) : ");
         String table = scanner.nextLine();
@@ -172,7 +171,7 @@ public class Manager {
         }
     }
 
-    public void help(){
+    private void help(){
         System.out.println("Список команд: ");
         System.out.println("exit - вихід з програми");
         System.out.println("add_book - додати книгу");
@@ -187,7 +186,7 @@ public class Manager {
         System.out.println("delete - видалити мультимедыйний елемент \n");
     }
 
-    public void close() {
+    private void close() {
         try {
             co.close();
         }catch(Exception ex) {
